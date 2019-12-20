@@ -1,23 +1,216 @@
-// add-collection-widget.js
-jQuery(document).ready(function () {
-    jQuery('.add-another-collection-widget').click(function (e) {
-        var list = jQuery(jQuery(this).attr('data-list-selector'));
-        // Try to find the counter of the list or use the length of the list
-        var counter = list.data('widget-counter') || list.children().length;
+;
+(function ($) {
+    $.fn.collection = function (options) {
 
-        // grab the prototype template
-        var newWidget = list.attr('data-prototype');
-        // replace the "__name__" used in the id and name of the prototype
-        // with a number that's unique to your emails
-        // end name attribute looks like name="contact[emails][2]"
-        newWidget = newWidget.replace(/__name__/g, counter);
-        // Increase the counter
-        counter++;
-        // And store it, the length cannot be used if deleting widgets is allowed
-        list.data('widget-counter', counter);
+        var settings = $.extend(true, {
+            beforeAddItem: function(collection, item, counter){
+                return item;
+            },
+            afterAddItem: function(collection, item, counter){
+                return true;
+            },
+            beforeRemoveItem: function(collection, item, counter){
+                return item;
+            },
+            afterRemoveItem: function(collection, item, counter){
+                return true;
+            }
+        }, options);
+        
+        $(this).each((index, collection) => {
 
-        // create a new list element and add it to the list
-        var newElem = jQuery(list.attr('data-widget-tags')).html(newWidget);
-        newElem.appendTo(list);
-    });
-});
+            let items = $(collection).children().length;
+            let min = get_widgetInit($(collection));
+
+            if (min > items) 
+            {
+                min-= items;
+
+                for (let i=0; i<min; i++)
+                {
+                    action_addItem($(collection))
+                }
+            }
+            
+            refresh_serial($(collection));
+        });
+
+        get_actions();
+
+        function action_addItem(collection)
+        {
+            console.log('add item');
+            
+            let counter = get_counter(collection);
+            let wrapper = get_widgetTag(collection);
+            let prototype = get_prototype(collection);
+                prototype = prototype.replace(/__name__/g, counter);
+                
+            let newItem = $(wrapper).html(prototype);
+                // newItem = settings.beforeAddItem(collection, newItem, counter);
+                newItem.appendTo(collection);
+    
+            settings.afterAddItem(collection, newItem, counter);
+
+            counter_increment(collection, counter);
+            refresh_serial(collection);
+            get_actions();
+        }
+
+        function action_removeItem(collection, element)
+        {
+            let items = collection.children();
+            let item = element.data('collection-item');
+            let min = get_widgetMin(collection);
+
+            if (items.length > min)
+            {
+                items.map(function(index, value) {
+    
+                    if (item == index)
+                    {
+                        $(value).remove();
+                    }
+                    
+                });
+
+                refresh_serial(collection);
+            }
+        }
+
+
+        function refresh_serial($c)
+        {
+            let id = get_id($c);
+            let items = $c.children();
+            let min = get_widgetMin($c);
+
+            // Refresh Serial
+            $c.find('[data-collection-serial]').each((serial, element) => {
+                serial++;
+                $(element).html(serial);
+            });
+
+            // Refresh Serial of Delete button
+            $c.find('[data-collection-serial0]').each((serial, element) => {
+                $(element).data('collection-item', serial);
+            });
+
+            $('[data-collection-action]').each(function(){
+                if ($(this).data('collection-action') == "remove" && items.length <= min)
+                {
+                    $(this).attr('disabled', true);
+                }
+                else
+                {
+                    $(this).attr('disabled', false);
+                }
+            });
+        }
+
+        function counter_increment($c, counter)
+        {
+            console.log('counter inc', counter);
+            
+            counter++;
+            $c.data('widget-counter', counter);
+        }
+
+
+        function get_actions()
+        {
+            $('[data-collection-action]').on('click', function(e) {
+
+                e.stopImmediatePropagation();
+                e.preventDefault();
+
+                let element = $(e.target);
+                let action = $(e.target).data('collection-action');
+                let collection = $($(e.target).data('collection-target'));
+    
+                eval('action_'+action+'Item')(collection, element);
+            });
+        }
+
+        function get_counter($c) 
+        {
+            return $c.data('widget-counter') || $c.children().length;
+        }
+
+        function get_id($c) 
+        {
+            return $c.attr('id');
+        }
+
+        function get_widgetTag($c)
+        {
+            return $c.attr('data-widget-tags');
+        }
+
+        function get_widgetMin($c)
+        {
+            return $c.attr('data-widget-min') || 0;
+        }
+
+        function get_widgetInit($c)
+        {
+            return $c.attr('data-widget-init') || 1;
+        }
+
+        function get_prototype($c)
+        {
+            let id = get_id($c);
+            let prototype = $('[data-collection-prototype][data-collection-target="#'+id+'"]');
+
+            if (prototype.length == 0)
+            {
+                console.warn("collection.js: Prototype is not found for the collection #"+id+".");
+                return false;
+            }
+            
+            return prototype.html();
+        }
+
+    };
+})
+(jQuery);
+
+
+$('#collection-author-fields').collection();
+
+
+
+// $('#collection-author-fields').collection({
+//     afterAddItem: function(collection, item, counter) {
+        
+//         // Set default Quantity
+//         // --
+
+//         var defaultValue = 1;
+
+//         for (let i=0; i<100; i++)
+//         {
+//             if (counter == i) 
+//             {
+//                 item.find('#products_prices_'+i+'_quantity').val(defaultValue);
+//                 break;
+//             }
+            
+//             defaultValue*= 10;
+//         }
+//     }
+// });
+
+// $('#collection-products-fields').collection({
+//     afterAddItem: function(collection, item, counter) {
+
+//         for (let i=0; i<100; i++)
+//         {            
+//             if (counter == i) 
+//             {
+//                 item.find('#estimates_products_'+i+'_quantity').val("1");
+//                 break;
+//             }
+//         }
+//     }
+// });

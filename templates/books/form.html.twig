@@ -15,24 +15,40 @@
     <div class="form-group">
         {{ form_label(form.authors) }}
         
-        <ul id="author-fields-list"
-            data-prototype="{{ form_widget(form.authors.vars.prototype)|e }}"
-            data-widget-tags="{{ '<li></li>'|e }}"
+        <div id="collection-author-fields"
+            data-widget-min="1"
+            data-widget-init="3"
+            data-widget-tags="{{ '<div class="form-group"></div>'|e }}"
             data-widget-counter="{{ form.authors|length }}">
 
         {% for authorField in form.authors %}
-            <li>
+            <div>
                 {{ form_widget(authorField) }}
-            </li>
+            </div>
         {% endfor %}
 
-        </ul>
+        </div>
+
+        <template data-collection-prototype data-collection-target="#collection-author-fields">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-3">Auteur #<span data-collection-serial></span></div>
+                    <div class="col-6">{{ form_widget(form.authors.vars.prototype.author) }}</div>
+                    <div class="col-3">
+                        <button type="button" class="btn btn-danger" 
+                            data-collection-action="remove" 
+                            data-collection-target="#collection-author-fields"
+                            data-collection-serial0="__name__">-</button></div>
+                </div>
+            </div>
+        </template>
 
 
     <button type="button"
         class="add-another-collection-widget"
-        data-list-selector="#author-fields-list">Ajouter un auteur</button>
-        
+        data-collection-action="add"
+        data-collection-target="#collection-author-fields">Ajouter un auteur</button>
+
     </div>
 
 

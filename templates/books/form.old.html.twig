@@ -1,0 +1,42 @@
+{{ form_start(form, {'attr': {'novalidate': "novalidate"}}) }}
+
+
+    <div class="form-group">
+        {{ form_label(form.title) }}
+        {{ form_widget(form.title) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.description) }}
+        {{ form_widget(form.description) }}
+    </div>
+
+
+    <div class="form-group">
+        {{ form_label(form.authors) }}
+        
+        <ul id="author-fields-list"
+            data-prototype="{{ form_widget(form.authors.vars.prototype)|e }}"
+            data-widget-tags="{{ '<li></li>'|e }}"
+            data-widget-counter="{{ form.authors|length }}">
+
+        {% for authorField in form.authors %}
+            <li>
+                {{ form_widget(authorField) }}
+            </li>
+        {% endfor %}
+
+        </ul>
+
+
+    <button type="button"
+        class="add-another-collection-widget"
+        data-list-selector="#author-fields-list">Ajouter un auteur</button>
+        
+    </div>
+
+
+    {{ form_rest(form) }}
+    <button type="submit" class="btn btn-xs btn-primary">Ajouter un livre</button>
+
+{{ form_end(form) }}
