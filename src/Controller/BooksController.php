@@ -57,11 +57,22 @@ class BooksController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name=":update")
+     * @Route("/{id}/edit", name=":update", methods={"HEAD","GET","POST"})
      */
-    public function update(): Response
+    public function update(Books $book, Request $request): Response
     {
+        $form = $this->createForm(XXXXXXX::class, $book);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($book);
+            $em->flush();
+        }
+
         return $this->render('books/update.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
 
