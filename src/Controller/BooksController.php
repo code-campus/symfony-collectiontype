@@ -2,7 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Books;
+use App\Repository\BooksRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 
@@ -12,45 +16,59 @@ use Symfony\Component\Routing\Annotation\Route;
 class BooksController extends AbstractController
 {
     /**
-     * @Route("s", name=":index")
+     * @Route("s", name=":index", methods={"HEAD","GET"})
      */
-    public function index()
+    public function index(BooksRepository $booksRepository): Response
     {
         return $this->render('books/index.html.twig', [
+            'books' => $booksRepository->findAll(),
         ]);
     }
 
     /**
-     * @Route("", name=":create")
+     * @Route("", name=":create", methods={"HEAD","GET","POST"})
      */
-    public function create()
+    public function create(Request $request): Response
     {
+        $book = new Books;
+        $form = $this->createForm(XXXXXXX::class, $book);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($book);
+            $em->flush();
+        }
+
         return $this->render('books/create.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/{id}", name=":read")
+     * @Route("/{id}", name=":read", methods={"HEAD","GET"})
      */
-    public function read()
+    public function read(Books $book): Response
     {
         return $this->render('books/read.html.twig', [
+            'book' => $book,
         ]);
     }
 
     /**
      * @Route("/{id}/edit", name=":update")
      */
-    public function update()
+    public function update(): Response
     {
         return $this->render('books/update.html.twig', [
         ]);
     }
-    
+
     /**
      * @Route("/{id}/delete", name=":delete")
      */
-    public function delete()
+    public function delete(): Response
     {
         return $this->render('books/delete.html.twig', [
         ]);
