@@ -38,6 +38,19 @@ class BooksController extends AbstractController
         if ($form->isSubmitted() && $form->isValid())
         {
             $em = $this->getDoctrine()->getManager();
+
+            $authors = $book->getAuthors();
+
+            foreach ($authors as $author)
+            {
+                $author = $author['author'];
+
+                $book->addAuthor( $author );
+                // dump($author);
+
+
+            }
+            // exit;
             $em->persist($book);
             $em->flush();
 

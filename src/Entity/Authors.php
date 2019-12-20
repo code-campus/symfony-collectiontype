@@ -34,13 +34,18 @@ class Authors
     private $nickname;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Books", mappedBy="authors")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Books", mappedBy="authors")
      */
     private $books;
 
+    // /**
+    //  * @ORM\OneToMany(targetEntity="App\Entity\Books", mappedBy="authors")
+    //  */
+    // private $books;
+
     public function __construct()
     {
-        $this->books = new ArrayCollection();
+        // $this->books = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -96,7 +101,7 @@ class Authors
     {
         if (!$this->books->contains($book)) {
             $this->books[] = $book;
-            $book->setAuthors($this);
+            $book->addAuthor($this);
         }
 
         return $this;
@@ -106,12 +111,40 @@ class Authors
     {
         if ($this->books->contains($book)) {
             $this->books->removeElement($book);
-            // set the owning side to null (unless already changed)
-            if ($book->getAuthors() === $this) {
-                $book->setAuthors(null);
-            }
+            $book->removeAuthor($this);
         }
 
         return $this;
     }
+
+    // /**
+    //  * @return Collection|Books[]
+    //  */
+    // public function getBooks(): Collection
+    // {
+    //     return $this->books;
+    // }
+
+    // public function addBook(Books $book): self
+    // {
+    //     if (!$this->books->contains($book)) {
+    //         $this->books[] = $book;
+    //         $book->setAuthors($this);
+    //     }
+
+    //     return $this;
+    // }
+
+    // public function removeBook(Books $book): self
+    // {
+    //     if ($this->books->contains($book)) {
+    //         $this->books->removeElement($book);
+    //         // set the owning side to null (unless already changed)
+    //         if ($book->getAuthors() === $this) {
+    //             $book->setAuthors(null);
+    //         }
+    //     }
+
+    //     return $this;
+    // }
 }

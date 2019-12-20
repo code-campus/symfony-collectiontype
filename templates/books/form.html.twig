@@ -16,8 +16,8 @@
         {{ form_label(form.authors) }}
         
         <div id="collection-author-fields"
-            data-widget-min="1"
-            data-widget-init="3"
+            data-widget-min="2"
+            data-widget-init="4"
             data-widget-tags="{{ '<div class="form-group"></div>'|e }}"
             data-widget-counter="{{ form.authors|length }}">
 
@@ -33,7 +33,8 @@
             <div class="form-group">
                 <div class="row">
                     <div class="col-3">Auteur #<span data-collection-serial></span></div>
-                    <div class="col-6">{{ form_widget(form.authors.vars.prototype.author) }}</div>
+                    <div class="col-3">{{ form_widget(form.authors.vars.prototype.truc) }}</div>
+                    <div class="col-3">{{ form_widget(form.authors.vars.prototype.author) }}</div>
                     <div class="col-3">
                         <button type="button" class="btn btn-danger" 
                             data-collection-action="remove" 

@@ -38,12 +38,14 @@ class BookType extends AbstractType
 
                 // Liste deroulante
                 'entry_type' => AuthorChoiceType::class,
-                'entry_options' => [
-                ],
+                'entry_options' => [],
 
                 // Autorise l'ajout ou la suppression de la liste
                 "allow_add" => true,
                 "allow_delete" => true,
+
+                'by_reference' => false,
+                // 'mapped' => false,
 
             ])
             
