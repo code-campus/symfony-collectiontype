@@ -40,6 +40,10 @@ class AuthorsController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->persist($author);
             $em->flush();
+
+            return $this->redirectToRoute('authors:read', [
+                'id' => $author->getId(),
+            ]);
         }
 
         return $this->render('authors/create.html.twig', [
@@ -70,6 +74,10 @@ class AuthorsController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->persist($author);
             $em->flush();
+
+            return $this->redirectToRoute('authors:read', [
+                'id' => $author->getId(),
+            ]);
         }
 
         return $this->render('authors/update.html.twig', [

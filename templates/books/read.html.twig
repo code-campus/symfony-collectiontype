@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% set title = "Livres (read): "~ book.title %}
+{% block title title %}
+
+{% block body %}
+<div class="container">
+
+    <div class="page-header">
+        <h1>{{ title }}</h1>
+    </div>
+
+    <div>
+        <a href="{{ path('books:index') }}">Liste des livres</a>
+        <a href="{{ path('books:read', {'id': book.id}) }}">Details du livre</a>
+        <a href="{{ path('books:delete', {'id': book.id}) }}">Supprimer le livre</a>
+    </div>
+
+    <div>
+        Titre du livre : {{ book.title }}
+    </div>
+
+    <div>
+        Description : {{ book.description }}
+    </div>
+
+    <div>
+        Auteur(s) : <br>
+
+        {% for author in book.authors %}
+        - {{ author.firstname }} {{ author.lastname }} ({{ author.nickname }})<br>
+        {% endfor %}
+    </div>
+
+    <div>
+        Prix : <br>
+
+        {% for data in book.prices %}
+            Prix Unitaire : {{ data.price }} pour {{ data.quantity }}.
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

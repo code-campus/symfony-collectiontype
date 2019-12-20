@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% set title = "Auteurs (read): "~ author.nickname %}
+{% block title title %}
+
+{% block body %}
+<div class="container">
+
+    <div class="page-header">
+        <h1>{{ title }}</h1>
+    </div>
+
+    <div>
+        <a href="{{ path('authors:index') }}">Liste des auteurs</a>
+        <a href="{{ path('authors:read', {'id': author.id}) }}">Details du auteur</a>
+        <a href="{{ path('authors:delete', {'id': author.id}) }}">Supprimer le auteur</a>
+    </div>
+
+    <div>
+        Prenom : {{ author.firstname }}
+    </div>
+    <div>
+        Nom : {{ author.lastname }}
+    </div>
+    <div>
+        Pseudo : {{ author.nickname }}
+    </div>
+</div>
+{% endblock %}

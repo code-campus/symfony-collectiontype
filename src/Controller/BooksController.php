@@ -40,6 +40,10 @@ class BooksController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->persist($book);
             $em->flush();
+
+            return $this->redirectToRoute('books:read', [
+                'id' => $book->getId(),
+            ]);
         }
 
         return $this->render('books/create.html.twig', [
@@ -70,6 +74,10 @@ class BooksController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->persist($book);
             $em->flush();
+
+            return $this->redirectToRoute('books:read', [
+                'id' => $book->getId(),
+            ]);
         }
 
         return $this->render('books/update.html.twig', [
