@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Books;
+use App\Form\BookType;
 use App\Repository\BooksRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,7 +32,7 @@ class BooksController extends AbstractController
     public function create(Request $request): Response
     {
         $book = new Books;
-        $form = $this->createForm(XXXXXXX::class, $book);
+        $form = $this->createForm(BookType::class, $book);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid())
@@ -61,7 +62,7 @@ class BooksController extends AbstractController
      */
     public function update(Books $book, Request $request): Response
     {
-        $form = $this->createForm(XXXXXXX::class, $book);
+        $form = $this->createForm(BookType::class, $book);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid())
