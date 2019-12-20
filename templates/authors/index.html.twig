@@ -1,20 +1,31 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AuthorsController!{% endblock %}
+{% set title = "Auteurs (index)" %}
+{% block title title%}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+<div class="container">
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <div class="page-header">
+        <h1>{{ title }}</h1>
+    </div>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/Users/arnaud/Developer/Netlab/Courses/Campus/symfony/CollectionType/src/Controller/AuthorsController.php'|file_link(0) }}">src/Controller/AuthorsController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/Users/arnaud/Developer/Netlab/Courses/Campus/symfony/CollectionType/templates/authors/index.html.twig'|file_link(0) }}">templates/authors/index.html.twig</a></code></li>
-    </ul>
+    <div>
+        <a href="{{ path('authors:create') }}">Ajouter un auteur</a>
+    </div>
+
+    {% for author in authors %}
+        <div>
+            {{ author.title }} (
+                <a href="{{ path('authors:read', {'id': author.id}) }}">details</a>  
+                <a href="{{ path('authors:update', {'id': author.id}) }}">modifier</a>  
+                <a href="{{ path('authors:delete', {'id': author.id}) }}">supprimer</a>  
+            )
+        </div>
+    {% else %}
+        <div class="alert alert-warning">
+            Il n'y à aucun auteur.
+        </div>
+    {% endfor %}
 </div>
 {% endblock %}
