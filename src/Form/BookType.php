@@ -4,6 +4,8 @@ namespace App\Form;
 
 use App\Entity\Books;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -30,7 +32,16 @@ class BookType extends AbstractType
             // ->add('cover') // File
             
             /* Authors */
-            // ->add('authors') // Collection
+            ->add('authors', CollectionType::class, [
+
+                // Liste deroulante
+                'entry_type' => ChoiceType::class,
+
+                // Autorise l'ajout ou la suppression de la liste
+                "allow_add" => true,
+                "allow_delete" => true,
+
+            ])
             
             /* Prices */
             // ->add('prices') // Collection

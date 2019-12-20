@@ -16,7 +16,7 @@
 
     {% for author in authors %}
         <div>
-            {{ author.title }} (
+            {{ author.firstname }} {{ author.lastname }} (
                 <a href="{{ path('authors:read', {'id': author.id}) }}">details</a>  
                 <a href="{{ path('authors:update', {'id': author.id}) }}">modifier</a>  
                 <a href="{{ path('authors:delete', {'id': author.id}) }}">supprimer</a>  
