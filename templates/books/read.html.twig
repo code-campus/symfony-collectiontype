@@ -28,7 +28,9 @@
         Auteur(s) : <br>
 
         {% for author in book.authors %}
-        - {{ author.firstname }} {{ author.lastname }} ({{ author.nickname }})<br>
+            - {{ author.firstname }} {{ author.lastname }} ({{ author.nickname }})<br>
+        {% else %}
+            <i>Pas d'auteur</i>
         {% endfor %}
     </div>
 
@@ -36,7 +38,9 @@
         Prix : <br>
 
         {% for data in book.prices %}
-            Prix Unitaire : {{ data.price }} pour {{ data.quantity }}.
+            Prix Unitaire : {{ data.price }} pour {{ data.quantity }}.<br>
+        {% else %}
+            <i>pas de prix</i>
         {% endfor %}
     </div>
 </div>
