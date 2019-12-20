@@ -3,13 +3,14 @@
 namespace App\Form;
 
 use App\Entity\Books;
+use App\Form\AuthorChoiceType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class BookType extends AbstractType
 {
@@ -33,9 +34,12 @@ class BookType extends AbstractType
             
             /* Authors */
             ->add('authors', CollectionType::class, [
+                'label' => false,
 
                 // Liste deroulante
-                'entry_type' => ChoiceType::class,
+                'entry_type' => AuthorChoiceType::class,
+                'entry_options' => [
+                ],
 
                 // Autorise l'ajout ou la suppression de la liste
                 "allow_add" => true,
