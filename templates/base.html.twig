@@ -3,10 +3,46 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+        {% endblock %}
     </head>
     <body>
+        <header>
+            <div class="container">
+                <nav class="navbar navbar-expand">
+
+                    {# Logo #}
+                    <a href="{{ path('homepage') }}" class="navbar-brand">LOGO</a>
+
+                    {# Menu #}
+                    <div class="collapse navbar-collapse">
+                        <ul class="navbar-nav mr-auto">
+
+                            {# Homepage #}
+                            <li class="nav-item">
+                                <a href="{{ path('homepage') }}" class="nav-link">Accueil</a>
+                            </li>
+
+                            {# Books #}
+                            <li class="nav-item">
+                                <a href="{{ path('books:index') }}" class="nav-link">Livres</a>
+                            </li>
+
+                            {# Authors #}
+                            <li class="nav-item">
+                                <a href="{{ path('authors:index') }}" class="nav-link">Auteurs</a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </header>
         {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+
+        {% block javascripts %}
+        {{ encore_entry_script_tags('app') }}
+        {% endblock %}
     </body>
 </html>

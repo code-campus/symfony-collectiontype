@@ -65,3 +65,15 @@
     - Author delete
 
 7. Vue TWIG
+    - Config de webpack
+        - `.addEntry('app', './assets/js/app.js')`
+    - Config de App.js
+        - `require('../../node_modules/bootstrap/dist/css/bootstrap.min.css');`
+        - `require('../css/app.css');`
+        - `const $ = require('jquery');`
+        - `require('popper.js');`
+        - `require('bootstrap');`
+    - Compiler les script
+        - `yarn encore dev`
+    
+    - Modif `template/base.html.twig`
