@@ -10,12 +10,16 @@
         <h1>{{ title }}</h1>
     </div>
 
+    <div>
+        <a href="{{ path('books:create') }}">Ajouter un livre</a>
+    </div>
+
     {% for book in books %}
         <div>
             {{ book.title }} (
-                <a href="{{ path('books:read', {'id': book.id}) }}">details</a> 
-                <a href="{{ path('books:update', {'id': book.id}) }}">modifier</a> 
-                <a href="{{ path('books:delete', {'id': book.id}) }}">supprimer</a> 
+                <a href="{{ path('books:read', {'id': book.id}) }}">details</a>  
+                <a href="{{ path('books:update', {'id': book.id}) }}">modifier</a>  
+                <a href="{{ path('books:delete', {'id': book.id}) }}">supprimer</a>  
             )
         </div>
     {% else %}
