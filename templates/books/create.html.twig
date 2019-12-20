@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% set title = "Livres (create)" %}
+{% block title title%}
+
+{% block body %}
+<div class="container">
+
+    <div class="page-header">
+        <h1>{{ title }}</h1>
+    </div>
+
+    <div>
+        <a href="{{ path('books:index') }}">Liste des livres</a>
+        <a href="{{ path('books:create') }}">Ajouter un livre</a>
+    </div>
+
+    {{ include('books/form.html.twig') }}
+</div>
+{% endblock %}

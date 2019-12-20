@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% set title = "Livres (update): "~ book.title %}
+{% block title title%}
+
+{% block body %}
+<div class="container">
+
+    <div class="page-header">
+        <h1>{{ title }}</h1>
+    </div>
+
+    <div>
+        <a href="{{ path('books:index') }}">Liste des livres</a>
+        <a href="{{ path('books:read', {'id': book.id}) }}">Details du livre</a>
+        <a href="{{ path('books:delete', {'id': book.id}) }}">Supprimer le livre</a>
+    </div>
+
+    {{ include('books/form.html.twig') }}
+</div>
+{% endblock %}

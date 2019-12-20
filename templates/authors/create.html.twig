@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% set title = "Auteurs (create)" %}
+{% block title title%}
+
+{% block body %}
+<div class="container">
+
+    <div class="page-header">
+        <h1>{{ title }}</h1>
+    </div>
+
+    <div>
+        <a href="{{ path('authors:index') }}">Liste des auteurs</a>
+        <a href="{{ path('authors:create') }}">Ajouter un auteur</a>
+    </div>
+
+    {{ include('authors/form.html.twig') }}
+</div>
+{% endblock %}
