@@ -46,7 +46,12 @@
 
 4. Création de la BDD + Migrations
 
-5. Routes + Controller
+5. Formulaires
+    - BookType
+    - AuthorType
+    - PriceType
+
+6. Routes + Controller
     - Homepage
     - Books
     - Book create
@@ -58,10 +63,5 @@
     - Author read
     - Author update
     - Author delete
-
-6. Formulaires
-    - BookType
-    - AuthorType
-    - PriceType
 
 7. Vue TWIG
